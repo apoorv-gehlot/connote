@@ -3,11 +3,19 @@ package com.agehlot.connote.service;
 import org.springframework.stereotype.Service;
 
 import com.agehlot.connote.helper.ConnoteHelper;
-import com.agehlot.connote.model.CarrierApplication;
+import com.agehlot.connote.model.CarrierAccount;
 
 @Service
 public class ConnoteService {
-    public String generateNextConnoteNumber(CarrierApplication carrierApp) {
+    
+    /**
+     * Method to accept the carrier account object and generates the next connote
+     * number in that series.
+     * 
+     * @param carrierApp
+     * @return
+     */
+    public String generateNextConnoteNumber(CarrierAccount carrierApp) {
         StringBuilder code = new StringBuilder();
         // add the prefix
         code.append(carrierApp.getPrefix());
@@ -26,7 +34,7 @@ public class ConnoteService {
         code.append(nextPaddedString);
 
         // calculate the check sum for the new index with padding
-        int checkSum = ConnoteHelper.checkSum(nextPaddedString, carrierApp.getDigits());
+        int checkSum = ConnoteHelper.checkSum(nextPaddedString);
         code.append(checkSum);
 
         return code.toString();
